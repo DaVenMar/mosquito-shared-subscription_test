@@ -1,0 +1,49 @@
+version: "3"
+services:
+#-----------------------------------------------------------------------------------------------------------------  
+  #Mqtt server
+  mqtt:
+    image: mqtt-lb-server:latest
+    container_name: server-mqtt
+    hostname: server-mqtt
+    networks:
+      - mqtt_network
+    volumes:
+      - mosquitto-datatest:/mosquitto/data
+      - mosquitto-logstest:/mosquitto/logs
+      - mosquitto-conftest:/mosquitto/config
+    restart: unless-stopped
+
+#-----------------------------------------------------------------------------------------------------------------  
+  #Mqtt publisher
+  mqttpublisher:
+    image: client-mqtt-pub
+    container_name: mqttpublisher
+    networks:
+      - mqtt_network
+    links:
+      - mqtt
+    depends_on:
+      - mqtt
+      - mqttclient
+    restart: unless-stopped
+
+#-----------------------------------------------------------------------------------------------------------------  
+  #Mqtt client
+  mqttclient:
+    image: client-mqtt-sub:latest
+    networks:
+      - mqtt_network
+    links:
+      - mqtt
+    depends_on:
+      - mqtt
+    restart: unless-stopped
+
+networks:
+  mqtt_network:
+
+volumes:
+  mosquitto-datatest:
+  mosquitto-logstest:
+  mosquitto-conftest:

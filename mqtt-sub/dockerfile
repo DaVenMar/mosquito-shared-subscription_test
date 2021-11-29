@@ -1,0 +1,14 @@
+#FROM ubuntu:latest
+#WORKDIR /mqtt-lb
+#RUN apt-get update
+#RUN apt upgrade
+#RUN apt-get install -y mosquitto mosquitto-clients
+#CMD mosquitto_sub -d -h server-mqtt -p 1883 -t '$share/client/topic'
+
+FROM python:3.7
+WORKDIR /mqtt-lb
+ADD mqtt-sub/requirements.txt /mqtt-lb/mqtt-sub/requirements.txt
+RUN pip install -r mqtt-sub/requirements.txt
+ADD mqtt-sub/mqttsub.py /mqtt-lb/mqtt-sub/mqttsub.py
+ENV PYTHONPATH "${PYTHONPATH}:/mqtt-lb"
+CMD ["python3", "-u", "mqtt-sub/mqttsub.py"]

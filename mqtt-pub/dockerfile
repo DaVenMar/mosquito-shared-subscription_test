@@ -1,0 +1,11 @@
+FROM python:3.7
+
+WORKDIR /mqtt-lb
+
+ADD mqtt-pub/requirements.txt /mqtt-lb/mqtt-pub/requirements.txt
+RUN pip install -r mqtt-pub/requirements.txt
+
+ADD mqtt-pub/publish.py /mqtt-lb/mqtt-pub/publish.py
+
+ENV PYTHONPATH "${PYTHONPATH}:/mqtt-lb"
+CMD ["python3", "mqtt-pub/publish.py"]
