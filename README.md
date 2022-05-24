@@ -2,7 +2,7 @@
 
 MQTT Shared subscriptions sandbox
 
-In this test environment you will be able to start up a shared subscription to the same [Eclipse Mosquito](https://mosquitto.org/) topic by several clients. The messages sent by the publish container in the topic will be divided among all the subscribers with the same client name.
+In this test environment you will be able to start up a shared subscription to the same [Eclipse Mosquitto](https://mosquitto.org/) topic by several clients. The messages sent by the publish container in the topic will be divided among all the subscribers with the same client name.
 
 Check the configured load balancer live by viewing the clients' logs.
 
